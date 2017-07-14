@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 var pool;
 
-var ApiController = function(envVars) {
+var GeneralController = function(envVars) {
     pool = mysql.createPool({
         connectionLimit : 10,
         host            : envVars.serverURL,
@@ -11,11 +11,11 @@ var ApiController = function(envVars) {
     });
 }
 
-ApiController.prototype.videoList = function(callback){
+GeneralController.prototype.videoList = function(callback){
     pool.query('select distinct VideoName as vid from AWSLabelResults;', function (error, results, fields) {
         callback(error, results);
     });
 }
 
 
-module.exports = ApiController;
+module.exports = GeneralController;

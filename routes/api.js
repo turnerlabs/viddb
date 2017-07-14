@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var utils = require('./../utils');
 
-var apiController = require('./../controllers/api-controller');
+var generalController = require('./../controllers/general');
 
 router.get('/ping', function(req, res, next) {
     console.log(req.app.locals.envVars);
@@ -12,7 +12,7 @@ router.get('/ping', function(req, res, next) {
 
 router.get('/getVideoList', function(req, res, next){
     
-    var controller = new apiController(req.app.locals.envVars);
+    var controller = new generalController(req.app.locals.envVars);
     controller.videoList(function(err, result){
         utils.responseFormatter(err, result, function(retVal){
             res.json(retVal);
