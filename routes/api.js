@@ -4,8 +4,6 @@ var utils = require('./../utils');
 
 var apiController = require('./../controllers/api-controller');
 
-
-/* GET users listing. */
 router.get('/ping', function(req, res, next) {
     console.log(req.app.locals.envVars);
 

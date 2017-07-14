@@ -1,4 +1,3 @@
-
 var mysql = require('mysql');
 var pool;
 
@@ -9,9 +8,7 @@ var ApiController = function(envVars) {
         user            : envVars.username,
         password        : envVars.password,
         database        : envVars.database
-});
-    
-    
+    });
 }
 
 ApiController.prototype.videoList = function(callback){
