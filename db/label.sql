@@ -21,4 +21,4 @@ order by timestamp;
 select TimeStamp, labels from AWSLabelResults
 where TimeStamp in (0, 8);
 
-
+CALL LabelCount('Chuck_history_reel_7');
