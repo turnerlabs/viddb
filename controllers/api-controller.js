@@ -14,11 +14,9 @@ var ApiController = function(envVars) {
     
 }
 
-ApiController.prototype.test = function(callback){
-    pool.query('select * from AWSLabelResults limit 100;', function (error, results, fields) {
-        if (error) throw error;
-        //var s = JSON.stringify(results);
-        callback(results);
+ApiController.prototype.videoList = function(callback){
+    pool.query('select distinct VideoName as vid from AWSLabelResults;', function (error, results, fields) {
+        callback(error, results);
     });
 }
 
