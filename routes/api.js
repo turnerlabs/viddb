@@ -4,6 +4,8 @@ var utils = require('./../utils');
 
 var generalController = require('./../controllers/general');
 var labelController = require('./../controllers/label');
+var videoController = require*(‘./../controllers/label’);
+
 
 router.get('/ping', function(req, res, next) {
     console.log(req.app.locals.envVars);
@@ -13,7 +15,7 @@ router.get('/ping', function(req, res, next) {
 
 /* General routes */
 router.get('/getVideoList', function(req, res, next){
-    
+
     var controller = new generalController(req.app.locals.envVars);
     controller.videoList(function(err, result){
         utils.responseFormatter(err, result, function(retVal){
