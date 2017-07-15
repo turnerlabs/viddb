@@ -3,6 +3,7 @@ var router = express.Router();
 var utils = require('./../utils');
 
 var generalController = require('./../controllers/general');
+var labelController = require('./../controllers/label');
 
 router.get('/ping', function(req, res, next) {
     console.log(req.app.locals.envVars);
@@ -10,6 +11,7 @@ router.get('/ping', function(req, res, next) {
   res.send('pong');
 });
 
+/* General routes */
 router.get('/getVideoList', function(req, res, next){
     
     var controller = new generalController(req.app.locals.envVars);
@@ -20,5 +22,17 @@ router.get('/getVideoList', function(req, res, next){
     });
 });
 
+/* Label routes */
+router.get('/getLabelCount/:videoName', function(req, res, next){
+
+    var vidName = req.params.videoName;
+
+    var lc = new labelController(req.app.locals.envVars);
+    lc.labelCount(vidName, function(err, result){
+        utils.responseFormatter(err, result, function(retVal){
+            res.json(retVal);
+        });
+    });
+});
 
 module.exports = router;

@@ -35,14 +35,14 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                        Start Bootstrap
+                        API Calls:
                     </a>
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="/api/getVideoList" id="getVideoList">getVideoList</a>
                 </li>
                 <li>
-                    <a href="#">Shortcuts</a>
+                    <a href="/api/getLabelCount/Chuck_history_reel_7">getLabelCount</a>
                 </li>
                 <li>
                     <a href="#">Overview</a>
@@ -68,14 +68,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>API calls:</h2>
-
-                        <h4>General:</h4>
-                            <a href="/api/getVideoList">getVideoList</a>
-                        <h4>Labels:</h4>
-
-                        <h4>Celebs:</h4>
-
+                        
+                        <div id="content"></div>
 
 
                     </div>
@@ -92,6 +86,8 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/site.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
