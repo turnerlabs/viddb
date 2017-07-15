@@ -6,7 +6,7 @@ select distinct VideoName as vid from AWSLabelResults;
 -- count of labels sorted by total
 select distinct Labels as Label, count(Labels) as total 
 from AWSLabelResults
-where VideoName = 'Chuck_history_reel_7'
+where VideoName = 'ChuckVideo3'
 group by label
 order by total desc;
 
@@ -21,4 +21,4 @@ order by timestamp;
 select TimeStamp, labels from AWSLabelResults
 where TimeStamp in (0, 8);
 
-CALL LabelCount('Chuck_history_reel_7');
+CALL LabelCount('ChuckVideo3');

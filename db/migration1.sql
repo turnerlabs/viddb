@@ -1,6 +1,6 @@
 DELIMITER //
 CREATE PROCEDURE LabelCount(
-    IN videoName VARCHAR(255)
+    IN video_name VARCHAR(255)
 )
 BEGIN
 
@@ -10,7 +10,7 @@ BEGIN
 	FROM 
 	    AWSLabelResults 
 	WHERE 
-	    VideoName = videoName 
+	    VideoName = video_name 
 	GROUP BY
 	    label 
 	ORDER BY 
