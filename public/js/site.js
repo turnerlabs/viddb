@@ -26,6 +26,8 @@ function getVideoInfo(e){
         console.log(labels);
 
         $('#video-content').empty();
+        $('#wordcloud').empty();
+
         
         $('#video-content').append(
             $('<pre>').text(
@@ -33,6 +35,24 @@ function getVideoInfo(e){
             )
         );
 
+        // {text: 'bumble', size: 29, href: 'https://en.wikipedia.org/wiki/Beadle'}
+        var newLabels = labels.map(function(obj){
+            var n = {};
+            n['text'] = obj.Label;
+            n['size'] = obj.total;
+            return n;
+        });
+        d3.wordcloud()
+            .size([500, 300])
+            .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+            .words(newLabels)
+            .onwordclick(function(d, i) {
+            if (d.href) { window.location = d.href; }
+            })
+            .start();
+
+        /* histobram */
+        
     });
 
 }

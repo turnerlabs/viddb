@@ -4,7 +4,7 @@ var utils = require('./../utils');
 
 var generalController = require('./../controllers/general');
 var labelController = require('./../controllers/label');
-var videoController = require*(‘./../controllers/label’);
+var videoController = require('./../controllers/video');
 
 
 router.get('/ping', function(req, res, next) {
@@ -31,7 +31,8 @@ router.get('/getLabelCount/:videoName', function(req, res, next){
 
     var lc = new labelController(req.app.locals.envVars);
     lc.labelCount(vidName, function(err, result){
-        utils.responseFormatter(err, result, function(retVal){
+        var stripMySqlJunk = result[0]
+        utils.responseFormatter(err, stripMySqlJunk, function(retVal){
             res.json(retVal);
         });
     });

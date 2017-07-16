@@ -1,4 +1,4 @@
-var mysql = require(‘mysql’);
+var mysql = require('mysql');
 var pool;
 
 var VideoController = function(envVars){
@@ -12,8 +12,9 @@ var VideoController = function(envVars){
 }
 
 VideoController.prototype.test = function(callback){
-    callback(1);
-});
+	callback(1);
+}
+
 
 module.exports = VideoController;
 
