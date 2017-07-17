@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "donwb/viddb:0.1",
+    "Name": "donwb/viddb:0.2",
     "Update": "true"
   },
   "Ports": [
