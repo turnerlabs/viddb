@@ -72,4 +72,28 @@ router.get('/celebs/:videoName', function(req, res, next){
     });
 });
 
+router.get('/celebTimeStamps/:celebName', function(req, res, next){
+    var celebName = req.params.celebName;
+    
+    var cc = new celebController(req.app.locals.envVars);
+    cc.getCelebTimestamps(celebName, function(err, result){
+        utils.responseFormatter(err, result, function(retVal){
+            res.json(retVal);
+        });
+    });
+});
+
+router.get('/getCelebCount/:videoName', function(req, res, next){
+    var videoName = req.params.videoName;
+
+    var cc = new celebController(req.app.locals.envVars);
+    cc.getCelebCount(videoName, function(err, result){
+        var stripMySqlJunk = result[0];
+        utils.responseFormatter(err, stripMySqlJunk, function(retVal){
+            res.json(retVal);
+        });
+    });
+});
+
+
 module.exports = router;

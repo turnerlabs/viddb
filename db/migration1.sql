@@ -18,3 +18,19 @@ BEGIN
     
 END //
 DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE CelebCount(
+	IN video_name VARCHAR(500)
+)
+BEGIN
+
+	SELECT DISTINCT Celebrities AS celebrity, COUNT(Celebrities) AS total
+	FROM AWSCelebResults
+	WHERE VideoName = video_name
+	GROUP BY celebrity
+	ORDER BY total DESC;
+    
+END //
+DELIMITER ;

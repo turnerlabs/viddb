@@ -21,4 +21,23 @@ CelebController.prototype.getCelebsByVid = function(vidName, callback){
     });
 }
 
+CelebController.prototype.getCelebTimestamps = function(celebName, callback){
+    var query = "select ISO, TimeStamp from AWSCelebResults where Celebrities = '" + celebName + "';";
+
+    pool.query(query, function(err, results, fields){
+        if(err){
+            console.log("ERROR: " + err);
+            throw err;
+        }
+        callback(err, results);
+    });
+}
+
+CelebController.prototype.getCelebCount = function(videoName, callback){
+    pool.query("CALL CelebCount('" + videoName + "');", function(err, result, fields){
+        callback(err, result);
+    });
+
+}
+
 module.exports = CelebController;
