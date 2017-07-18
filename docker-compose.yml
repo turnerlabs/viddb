@@ -1,0 +1,11 @@
+version: "2"
+services:
+  viddb:
+    build: .
+    image: quay.io/turner/viddb:${VERSION}
+    ports:
+    - 80:3000
+    environment:
+      HEALTHCHECK: /api/ping
+      PORT: "3000"    
+    env_file: env

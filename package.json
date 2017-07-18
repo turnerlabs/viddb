@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "_unique-version": "echo VERSION=$(jq -r .version < package.json)-$(uuidgen) > .env",
+    "docker-build": "npm run _unique-version && docker-compose build",
+    "harbor-deploy": "npm run docker-build && docker-compose push && harbor-compose up && harbor-compose ps"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
@@ -14,5 +17,9 @@
     "morgan": "~1.7.0",
     "mysql": "^2.13.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "harbor-compose-wrapper": "^0.12.0",
+    "uuidgen": "^1.0.0"
   }
 }

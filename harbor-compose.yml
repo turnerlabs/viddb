@@ -1,0 +1,11 @@
+shipments:
+  viddb:
+    env: dev
+    barge: digital-sandbox
+    containers:
+    - viddb
+    replicas: 4
+    group: ops
+    property: turner
+    project: turner
+    product: turner
