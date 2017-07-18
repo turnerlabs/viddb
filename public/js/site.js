@@ -89,7 +89,13 @@ function clearTimeInterval(e) {
 function getHTML(objects, baseTime) {
     var HTMLString = '';
     if (objects[baseTime]) {
-        HTMLString = objects[baseTime].join(', ');
+       HTMLString += '<span>';
+       objects[baseTime].map(function(object) {
+           var labelType = 'label-default';
+           if (object === 'People' || object === 'Person') labelType = 'label-success'
+           HTMLString += '<span class="label ' + labelType + '">' + object + "</span>&nbsp;";
+       });
+       HTMLString += '</span>';
     }
     return HTMLString;
 }
