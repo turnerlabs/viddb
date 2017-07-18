@@ -13,6 +13,7 @@ var GeneralController = function(envVars) {
 
 GeneralController.prototype.videoList = function(callback){
     pool.query('select distinct VideoName as vid from AWSLabelResults;', function (error, results, fields) {
+        if (error) throw error;
         callback(error, results);
     });
 }

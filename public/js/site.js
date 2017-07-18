@@ -11,7 +11,6 @@ $(document).ready(function(){
 
         $('a.video').click(getVideoInfo);
 
-
         $("#wrapper").toggleClass("toggled");
     });
 
@@ -21,6 +20,9 @@ $(document).ready(function(){
 function getVideoInfo(e){
     var vidName = e.target.id;
     console.log(vidName);
+    
+    $('#videoTitle').html(vidName);
+    $('#celebsTitle').html('Celebrities in this video');
 
     $.getJSON('/api/getLabelCount/' + vidName, function(listResult){
         var labels = listResult.res;
@@ -65,11 +67,8 @@ function getVideoInfo(e){
     });
 
     $.getJSON('/api/celebSummary/' + vidName, function(celebs) {
-        var html = '';
-        celebs.map(function(celeb) {
-            html += '<span><img height="100" width="100" src="' + celeb.thumbnailUrl + '"></span>&nbsp;';
-        });
-        $('#celebSummary').html(html);
+        window.celebSummary = celebs;
+        updateCelebSummaryHtml(celebs);
     });    
 
     //reload the video source
@@ -83,10 +82,9 @@ function getVideoInfo(e){
 
 function setTimeInterval(e) {
     window.currentInterval = setInterval(function() {
-        $('#currentTime').html(vid.currentTime);
         var baseTime = Math.floor(vid.currentTime);
         $('#currentLabels').html(getHTML(window.currentVideoLabels, baseTime));
-        $('#currentCelebs').html(getHTML(window.currentVideoCelebs, baseTime));
+        highlightCurrentCeleb(window.currentVideoCelebs, baseTime);
     }, 100);
 }
 
@@ -97,15 +95,47 @@ function clearTimeInterval(e) {
 function getHTML(objects, baseTime) {
     var HTMLString = '';
     if (objects[baseTime]) {
-       HTMLString += '<span>';
        objects[baseTime].map(function(object) {
            var labelType = 'label-default';
-           if (object === 'People' || object === 'Person') labelType = 'label-success'
+           if (object === 'People') labelType = 'label-success'
            HTMLString += '<span class="label ' + labelType + '">' + object + "</span>&nbsp;";
        });
-       HTMLString += '</span>';
     }
     return HTMLString;
+}
+
+function getCelebId(celeb) {
+    var id = celeb.replace("'", '-');
+    id = id.replace(' ', '-');
+    return id;
+}
+
+function updateCelebSummaryHtml(celebs) {
+    $('#celebSummary').empty()
+    var html = '';
+    celebs.map(function(celeb) {
+        var id = getCelebId(celeb.name);
+        html += '<span><img id="'+ id +'" height="75" width="75" class="img-rounded" src="' + celeb.thumbnailUrl + '"</span>&nbsp;';
+    });
+    $('#celebSummary').html(html);        
+}
+
+function highlightCurrentCeleb(celebs, baseTime) {
+
+    //first reset style on each celeb
+    window.celebSummary.map(function(celeb) {
+        var id = getCelebId(celeb.name);
+        $('#' + id).removeClass();
+    });
+
+    //change the css style of each current celebrity thumbnail
+    if (celebs[baseTime]) {
+        celebs[baseTime].map(function(celeb) {
+            //find image named celeb and chang its css
+            var id = getCelebId(celeb);
+            $('#' + id).addClass('img-circle');
+        });
+    }    
 }
 
 function drawHistogram(labelData) {

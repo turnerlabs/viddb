@@ -1,9 +1,11 @@
 {% block content %}
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
+            <h2>
             <a href="#">
                 Video-fi
             </a>
+            </h2>
         </li>
        {% for v in vids %}
         <li><a href="#" id="{{v.vid}}" class="video">{{v.vid}}</a></li>

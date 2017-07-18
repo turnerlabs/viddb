@@ -31,6 +31,7 @@ router.get('/getLabelCount/:videoName', function(req, res, next){
 
     var lc = new labelController(req.app.locals.envVars);
     lc.labelCount(vidName, function(err, result){
+        if (err) throw err;
         var stripMySqlJunk = result[0]
         utils.responseFormatter(err, stripMySqlJunk, function(retVal){
             res.json(retVal);

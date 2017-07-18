@@ -39,49 +39,46 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
+
+                <!-- video player + celebs -->
                 <div class="row">
                     <div class="col-md-6">
-                        Histogram
+                        <div class="video">
+                            <div id="videoTitle"></div>
+                            <video class="video_player" id="vid" controls seeking>
+                                <source src="" type=video/mp4>
+                            </video>
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        Word Cloud
+                        <div id="celebsTitle"></div>
+                        <div id="celebSummary"></div>
                     </div>
                 </div>
+
+                <!-- divider -->
+                <div class="row"><br /></div>                
+
+                <!-- labels -->
                 <div class="row">
-                    <div class="col-md-6">
-                        <div id="chart_div" style="width: 500px; height: 400px;"></div>
+                    <div class="objects">
+                        <ul id="currentLabels"></ul>
                     </div>
+                </div>                
+
+                <!-- divider -->
+                <div class="row"><br /><br /></div>
+
+                <!-- analytics -->
+                <div class="row">
                     <div class="col-md-6">
                         <div id="wordcloud"></div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
-                        Celebrities in the video
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="celebSummary"></div>
-                    </div>
+                        <div id="chart_div" style="width: 500px; height: 400px;"></div>
+                    </div>                    
                 </div>                
-                <div class="row">
-                    <div class="video">
-                        <br/><br/>
-                        <video class="video_player" id="vid" controls seeking>
-                            <source src="" type=video/mp4>
-                        </video>
-                        <span id="currentTime"></span>
-                    </div>
-                    <div class="objects">
-                        <h3>Labels</h3>
-                        <ul id="currentLabels"></ul>
-                    </div>
-                    <div class="objects">
-                        <h3>Celebs</h3>
-                        <ul id="currentCelebs"></ul>
-                    </div>
-                </div>
+               
             </div>
         </div>
         <!-- /#page-content-wrapper -->
