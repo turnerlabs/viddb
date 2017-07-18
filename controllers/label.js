@@ -17,5 +17,14 @@ LabelController.prototype.labelCount = function(vidName, callback){
     });
 }
 
+LabelController.prototype.getLabelsByVid = function(vidName, callback){
+    pool.query('SELECT * FROM `AWSLabelResults` WHERE `VideoName`="' + vidName + '" ORDER BY `Timestamp` LIMIT 1000', (err, results, fields) => {
+      if (err) {
+        console.log("ERROR =>", err)
+        throw err;
+      }
+      callback(err, results);
+    });
+}
 
 module.exports = LabelController;

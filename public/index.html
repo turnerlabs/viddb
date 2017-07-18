@@ -54,7 +54,24 @@
                     <div class="col-md-6">
                         <div id="wordcloud"></div>
                     </div>
-
+                </div>
+                <div class="row">
+                    <!-- begin -->
+                    <div class="video">
+                        <video class="video_player" id="vid" controls seeking>
+                            <source src="" type=video/mp4>
+                        </video>
+                        <span id="currentTime"></span>
+                    </div>
+                    <div class="objects">
+                        <h3>Labels</h3>
+                        <ul id="currentLabels"></ul>
+                    </div>
+                    <div class="objects">
+                        <h3>Celebs</h3>
+                        <ul id="currentCelebs"></ul>
+                    </div>
+                    <!-- end -->
                 </div>
             </div>
         </div>
@@ -89,4 +106,15 @@
 
 </body>
 
+  <style>
+    .video_player {
+        width: 100%;
+    }
+    /* .video {
+        width: 500px;
+        float: left;
+        width: 500px;
+    } */
+</style> 
+ 
 </html>

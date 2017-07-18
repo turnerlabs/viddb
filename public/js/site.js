@@ -14,8 +14,8 @@ $(document).ready(function(){
 
         $("#wrapper").toggleClass("toggled");
     });
-    
-    
+
+
 });
 
 function getVideoInfo(e){
@@ -56,8 +56,43 @@ function getVideoInfo(e){
         drawHistogram(labels);
     });
 
+    $.getJSON('/api/labels/' + vidName, function(result) {
+        window.currentVideoLabels = result;
+    });
+
+    $.getJSON('/api/celebs/' + vidName, function(result) {
+        window.currentVideoCelebs = result;
+    });
+
+    //reload the video source
+    var src = 'http://video-metadata-ui.dev.services.ec2.dmtio.net/stream/' + vidName + '.mp4';
+    console.log(src);
+    $("#vid").attr("src", src)
+    $('#vid').bind('play', setTimeInterval);
+    $('#vid').bind('pause', clearTimeInterval);
+    $('#vid').bind('ended', clearTimeInterval);
 }
 
+function setTimeInterval(e) {
+    window.currentInterval = setInterval(function() {
+        $('#currentTime').html(vid.currentTime);
+        var baseTime = Math.floor(vid.currentTime);
+        $('#currentLabels').html(getHTML(window.currentVideoLabels, baseTime));
+        $('#currentCelebs').html(getHTML(window.currentVideoCelebs, baseTime));
+    }, 100);
+}
+
+function clearTimeInterval(e) {
+    clearInterval(currentInterval);
+}
+
+function getHTML(objects, baseTime) {
+    var HTMLString = '';
+    if (objects[baseTime]) {
+        HTMLString = objects[baseTime].join(', ');
+    }
+    return HTMLString;
+}
 
 function drawHistogram(labelData) {
     var maxLength = labelData.length > 20 ? 20 : labelData.length;
