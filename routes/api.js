@@ -1,17 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var utils = require('./../utils');
+var Bing = require('node-bing-api')({ accKey: process.env.AZURE_API_KEY });
 
 var generalController = require('./../controllers/general');
 var labelController = require('./../controllers/label');
 var videoController = require('./../controllers/video');
 var celebController = require('./../controllers/celeb');
 
-
 router.get('/ping', function(req, res, next) {
-    console.log(req.app.locals.envVars);
-
-  res.send('pong');
+    //console.log(req.app.locals.envVars);
+    res.send('pong');
 });
 
 /* General routes */
@@ -95,5 +94,33 @@ router.get('/getCelebCount/:videoName', function(req, res, next){
     });
 });
 
+
+//returns summary of celebs in a video along with their thumbnail images
+router.get('/celebSummary/:videoName', function(req, res, next){
+    var vidName = req.params.videoName;
+
+    var cc = new celebController(req.app.locals.envVars);
+    cc.getCelebSummaryByVid(vidName, function(err, results) {
+        var objects = [];
+        var counter = 1;
+        results.map(function(object) {
+            //get a thumbnail for this celebrity
+            Bing.images(object.Celebrities, { top: 1, skip: 0 }, function(error, response, body){
+                if (error) throw error;
+                var item = { name: object.Celebrities };                
+                if (body.value && body.value.length > 0)
+                    item.thumbnailUrl = body.value[0].thumbnailUrl                
+                objects.push(item);
+
+                //return response once we've processed all the celebrities
+                if (counter === results.length) {
+                    res.json(objects);
+                    return;
+                }
+                counter++;
+            });
+        });
+    });   
+});
 
 module.exports = router;

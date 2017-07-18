@@ -64,6 +64,14 @@ function getVideoInfo(e){
         window.currentVideoCelebs = result;
     });
 
+    $.getJSON('/api/celebSummary/' + vidName, function(celebs) {
+        var html = '';
+        celebs.map(function(celeb) {
+            html += '<span><img height="100" width="100" src="' + celeb.thumbnailUrl + '"></span>&nbsp;';
+        });
+        $('#celebSummary').html(html);
+    });    
+
     //reload the video source
     var src = 'http://video-metadata-ui.dev.services.ec2.dmtio.net/stream/' + vidName + '.mp4';
     console.log(src);

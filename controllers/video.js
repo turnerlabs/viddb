@@ -3,7 +3,7 @@ var pool;
 
 var VideoController = function(envVars){
     pool = mysql.createPool({
-	connectionLimit : 10,
+	connectionLimit : 2,
 	host		: envVars.serverURL,
 	user		: envVars.username,
 	password	: envVars.password,
