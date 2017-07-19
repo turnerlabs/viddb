@@ -21,8 +21,8 @@ function getVideoInfo(e){
     var vidName = e.target.id;
     console.log(vidName);
     
-    $('#videoTitle').html(vidName);
-    $('#celebsTitle').html('Celebrities in this video');
+    $('#videoTitle').html('<h4>' + vidName + '</h4>');
+    $('#celebsTitle').html('<h4>Celebrities in this video</h4>');
 
     $.getJSON('/api/getLabelCount/' + vidName, function(listResult){
         var labels = listResult.res;
@@ -111,11 +111,11 @@ function getCelebId(celeb) {
 }
 
 function updateCelebSummaryHtml(celebs) {
-    $('#celebSummary').empty()
+    $('#celebSummary').empty();
     var html = '';
     celebs.map(function(celeb) {
         var id = getCelebId(celeb.name);
-        html += '<span><img id="'+ id +'" height="75" width="75" class="img-rounded" src="' + celeb.thumbnailUrl + '"</span>&nbsp;';
+        html += '<div style="vertical-align: top;display: inline-block;text-align: left;width: 120px;"><img id="'+ id +'" height="75" width="75" class="img-rounded" src="' + celeb.thumbnailUrl + '"<span style="display: block;">' + celeb.name + '</span></div>&nbsp;';
     });
     $('#celebSummary').html(html);        
 }
