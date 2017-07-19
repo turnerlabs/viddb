@@ -22,7 +22,7 @@ function getVideoInfo(e){
     console.log(vidName);
     
     $('#videoTitle').html('<h4>' + vidName + '</h4>');
-    $('#celebsTitle').html('<h4>Celebrities in this video</h4>');
+    $('#celebsTitle').html('<h4>Celebrities in ' + vidName + '</h4>');
 
     $.getJSON('/api/getLabelCount/' + vidName, function(listResult){
         var labels = listResult.res;
@@ -115,7 +115,7 @@ function updateCelebSummaryHtml(celebs) {
     var html = '';
     celebs.map(function(celeb) {
         var id = getCelebId(celeb.name);
-        html += '<div style="vertical-align: top;display: inline-block;text-align: left;width: 120px;"><img id="'+ id +'" height="75" width="75" class="img-rounded" src="' + celeb.thumbnailUrl + '"<span style="display: block;">' + celeb.name + '</span></div>&nbsp;';
+        html += '<div style="vertical-align: top;display: inline-block;text-align: left;width: 120px;"><img id="'+ id +'" height="75" width="75" class="img-circle" src="' + celeb.thumbnailUrl + '"<span style="display: block;">' + celeb.name + '</span></div>&nbsp;';
     });
     $('#celebSummary').html(html);        
 }
@@ -126,7 +126,7 @@ function highlightCurrentCeleb(celebs, baseTime) {
         //first reset style on each celeb
         window.celebSummary.map(function(celeb) {
             var id = getCelebId(celeb.name);
-            $('#' + id).removeClass();
+            $('#' + id).css({ border: '' });
         });
 
         //change the css style of each current celebrity thumbnail
@@ -134,7 +134,7 @@ function highlightCurrentCeleb(celebs, baseTime) {
             celebs[baseTime].map(function(celeb) {
                 //find image named celeb and chang its css
                 var id = getCelebId(celeb);
-                $('#' + id).addClass('img-circle');
+                $('#' + id).css({ border: "10px solid red" });
             });
         }
     }
