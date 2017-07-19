@@ -18,7 +18,7 @@ LabelController.prototype.labelCount = function(vidName, callback){
 }
 
 LabelController.prototype.getLabelsByVid = function(vidName, callback){
-    pool.query('SELECT * FROM `AWSLabelResults` WHERE `VideoName`="' + vidName + '" ORDER BY `Timestamp` LIMIT 1000', (err, results, fields) => {
+    pool.query('SELECT * FROM `AWSLabelResults` WHERE `VideoName`="' + vidName + '" AND Confidence > 80 ORDER BY `Timestamp` LIMIT 1000', (err, results, fields) => {
       if (err) {
         console.log("ERROR =>", err)
         throw err;

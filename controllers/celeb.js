@@ -12,7 +12,7 @@ var CelebController = function(envVars) {
 }
 
 CelebController.prototype.getCelebsByVid = function(vidName, callback) {
-    var sql = 'SELECT * FROM `AWSCelebResults` WHERE `VideoName`="' + vidName + '" ORDER BY `Timestamp` LIMIT 1000';
+    var sql = 'SELECT * FROM `AWSCelebResults` WHERE `VideoName`="' + vidName + '" AND MatchConfidence > 60 ORDER BY `Timestamp` LIMIT 1000';
     pool.query(sql, (err, results, fields) => {
       if (err) {
         console.log("ERROR =>", err)
@@ -23,7 +23,7 @@ CelebController.prototype.getCelebsByVid = function(vidName, callback) {
 }
 
 CelebController.prototype.getCelebSummaryByVid = function(vidName, callback) {
-    var sql = 'SELECT DISTINCT Celebrities FROM `AWSCelebResults` WHERE `VideoName`="' + vidName + '" ORDER BY `Celebrities` LIMIT 1000';
+    var sql = 'SELECT DISTINCT Celebrities FROM `AWSCelebResults` WHERE `VideoName`="' + vidName + '" AND MatchConfidence > 60 ORDER BY `Celebrities` LIMIT 1000';
     pool.query(sql, (err, results, fields) => {
       if (err) {
         console.log("ERROR =>", err)

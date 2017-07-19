@@ -121,21 +121,23 @@ function updateCelebSummaryHtml(celebs) {
 }
 
 function highlightCurrentCeleb(celebs, baseTime) {
+    if (window.celebSummary && window.celebSummary.length > 0) {
 
-    //first reset style on each celeb
-    window.celebSummary.map(function(celeb) {
-        var id = getCelebId(celeb.name);
-        $('#' + id).removeClass();
-    });
-
-    //change the css style of each current celebrity thumbnail
-    if (celebs[baseTime]) {
-        celebs[baseTime].map(function(celeb) {
-            //find image named celeb and chang its css
-            var id = getCelebId(celeb);
-            $('#' + id).addClass('img-circle');
+        //first reset style on each celeb
+        window.celebSummary.map(function(celeb) {
+            var id = getCelebId(celeb.name);
+            $('#' + id).removeClass();
         });
-    }    
+
+        //change the css style of each current celebrity thumbnail
+        if (celebs[baseTime]) {
+            celebs[baseTime].map(function(celeb) {
+                //find image named celeb and chang its css
+                var id = getCelebId(celeb);
+                $('#' + id).addClass('img-circle');
+            });
+        }
+    }
 }
 
 function drawHistogram(labelData) {
