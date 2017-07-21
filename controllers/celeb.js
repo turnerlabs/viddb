@@ -23,7 +23,14 @@ CelebController.prototype.getCelebsByVid = function(vidName, callback) {
 }
 
 CelebController.prototype.getCelebSummaryByVid = function(vidName, callback) {
-    var sql = 'SELECT DISTINCT Celebrities FROM `AWSCelebResults` WHERE `VideoName`="' + vidName + '" AND MatchConfidence > 60 ORDER BY `Celebrities` LIMIT 1000';
+
+    var sql = `
+select distinct celebrity, thumbnail
+from CelebrityThumbnails
+join AWSCelebResults on AWSCelebResults.Celebrities = CelebrityThumbnails.Celebrity
+where VideoName = '${vidName}' and MatchConfidence > 60
+order by Celebrity`;
+
     pool.query(sql, (err, results, fields) => {
       if (err) {
         console.log("ERROR =>", err)
