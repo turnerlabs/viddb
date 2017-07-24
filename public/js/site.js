@@ -144,7 +144,9 @@ function highlightCurrentCeleb(celebs, baseTime) {
                 //find image named celeb and chang its css
                 var id = getCelebId(celeb);
                 $('#' + id).css({ border: "10px solid red" });
-                currentCelebs += '<div style="vertical-align: top;display: inline-block;text-align: center;width: 200px;"><img id="'+ id +'" height="100" width="100" class="img-circle" src="' + currentSummaries[celeb].thumbnailUrl + '"><span style="display: block; font-size: 20px;">' + id + '</span></div>&nbsp;';
+                if (currentSummaries[celeb] && currentSummaries[celeb].thumbnailUrl) {
+                   currentCelebs += '<div style="vertical-align: top;display: inline-block;text-align: center;width: 200px;"><img id="'+ id +'" height="100" width="100" class="img-circle" src="' + currentSummaries[celeb].thumbnailUrl + '"><span style="display: block; font-size: 20px;">' + id + '</span></div>&nbsp;';
+                }
             });
         }
 
