@@ -1,5 +1,7 @@
 var mysql = require('mysql');
 var pool;
+var CONFIDENCE = process.env.CONFIDENCE || 80;
+var LIMIT = process.env.LIMIT || 2000;
 
 var CelebController = function(envVars) {
     pool = mysql.createPool({
@@ -12,7 +14,7 @@ var CelebController = function(envVars) {
 }
 
 CelebController.prototype.getCelebsByVid = function(vidName, callback) {
-    var sql = 'SELECT * FROM `AWSCelebResults` WHERE `VideoName`="' + vidName + '" AND MatchConfidence > 60 ORDER BY `Timestamp` LIMIT 1000';
+    var sql = 'SELECT * FROM `AWSCelebResults` WHERE `VideoName`="' + vidName + '" AND MatchConfidence >= ' + CONFIDENCE + ' ORDER BY `Timestamp` LIMIT ' + LIMIT;
     pool.query(sql, (err, results, fields) => {
       if (err) {
         console.log("ERROR =>", err)
@@ -28,7 +30,7 @@ CelebController.prototype.getCelebSummaryByVid = function(vidName, callback) {
 select distinct celebrity, thumbnail
 from CelebrityThumbnails
 join AWSCelebResults on AWSCelebResults.Celebrities = CelebrityThumbnails.Celebrity
-where VideoName = '${vidName}' and MatchConfidence > 60
+where VideoName = '${vidName}' and MatchConfidence > ${CONFIDENCE}
 order by Celebrity`;
 
     pool.query(sql, (err, results, fields) => {

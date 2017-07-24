@@ -1,5 +1,7 @@
 var mysql = require('mysql');
 var pool;
+var CONFIDENCE = process.env.CONFIDENCE || 80;
+var LIMIT = process.env.LIMIT || 2000;
 
 var LabelController = function(envVars) {
     pool = mysql.createPool({
@@ -18,7 +20,7 @@ LabelController.prototype.labelCount = function(vidName, callback){
 }
 
 LabelController.prototype.getLabelsByVid = function(vidName, callback){
-    pool.query('SELECT * FROM `AWSLabelResults` WHERE `VideoName`="' + vidName + '" AND Confidence > 80 ORDER BY `Timestamp` LIMIT 1000', (err, results, fields) => {
+    pool.query('SELECT * FROM `AWSLabelResults` WHERE `VideoName`="' + vidName + '" AND Confidence >= ' + CONFIDENCE + ' ORDER BY `Timestamp` LIMIT ' + LIMIT, (err, results, fields) => {
       if (err) {
         console.log("ERROR =>", err)
         throw err;

@@ -46,12 +46,15 @@ router.get('/labels/:videoName', function(req, res, next){
     lc.getLabelsByVid(vidName, function(err, result) {
         var objects = {};
         result.map((object) => {
-            if (!objects[object.TimeStamp]) {
-                objects[object.TimeStamp] = [];
+            let timestamp = Math.floor(object.TimeStamp);
+            if (!objects[timestamp]) {
+                objects[timestamp] = [];
             }
-            objects[object.TimeStamp].push(object['Labels']);
+            if (objects[timestamp].indexOf(object['Labels']) === -1) {
+                objects[timestamp].push(object['Labels']);
+            }
         });
-        res.json(objects);     
+        res.json(objects);
     });
 });
 
@@ -63,18 +66,21 @@ router.get('/celebs/:videoName', function(req, res, next){
     cc.getCelebsByVid(vidName, function(err, result) {
         var objects = {};
         result.map((object) => {
-            if (!objects[object.TimeStamp]) {
-                objects[object.TimeStamp] = [];
+            let timestamp = Math.floor(object.TimeStamp);
+            if (!objects[timestamp]) {
+                objects[timestamp] = [];
             }
-            objects[object.TimeStamp].push(object['Celebrities']);
+            if (objects[timestamp].indexOf(object['Celebrities']) === -1) {
+                objects[timestamp].push(object['Celebrities']);
+            }
         });
-        res.json(objects);     
+        res.json(objects);
     });
 });
 
 router.get('/celebTimeStamps/:celebName', function(req, res, next){
     var celebName = req.params.celebName;
-    
+
     var cc = new celebController(req.app.locals.envVars);
     cc.getCelebTimestamps(celebName, function(err, result){
         utils.responseFormatter(err, result, function(retVal){
@@ -101,11 +107,11 @@ router.get('/celebSummary/:videoName', function(req, res, next){
     var vidName = req.params.videoName;
     var cc = new celebController(req.app.locals.envVars);
     cc.getCelebSummaryByVid(vidName, (err, results) => {
-        var payload = results.map(result => { 
+        var payload = results.map(result => {
             return { name: result.celebrity, thumbnailUrl: result.thumbnail };
         });
         res.json(payload)
-    });   
+    });
 });
 
 module.exports = router;

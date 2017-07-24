@@ -4,7 +4,7 @@ $(document).ready(function(){
     //google.charts.setOnLoadCallback(drawChart);
 
     $.getJSON('/api/getVideoList', function(videoResult){
-        
+
         var vids = {vids: videoResult.res}
         var sideHtml = nunjucks.render('../templates/sidebar.njk', vids);
         $('#sidebar-placeholder').replaceWith(sideHtml);
@@ -20,7 +20,7 @@ $(document).ready(function(){
 function getVideoInfo(e){
     var vidName = e.target.id;
     console.log(vidName);
-    
+
     $('#videoTitle').html('<h4>' + vidName + '</h4>');
     $('#celebsTitle').html('<h4>Celebrities in ' + vidName + '</h4>');
 
@@ -69,7 +69,7 @@ function getVideoInfo(e){
     $.getJSON('/api/celebSummary/' + vidName, function(celebs) {
         window.celebSummary = celebs;
         updateCelebSummaryHtml(celebs);
-    });    
+    });
 
     //reload the video source
     var src = 'http://video-metadata-ui.dev.services.ec2.dmtio.net/stream/' + vidName + '.mp4';
@@ -117,7 +117,7 @@ function updateCelebSummaryHtml(celebs) {
         var id = getCelebId(celeb.name);
         html += '<div style="vertical-align: top;display: inline-block;text-align: left;width: 120px;"><img id="'+ id +'" height="75" width="75" class="img-circle" src="' + celeb.thumbnailUrl + '"<span style="display: block;">' + celeb.name + '</span></div>&nbsp;';
     });
-    $('#celebSummary').html(html);        
+    $('#celebSummary').html(html);
 }
 
 function highlightCurrentCeleb(celebs, baseTime) {
@@ -129,14 +129,27 @@ function highlightCurrentCeleb(celebs, baseTime) {
             $('#' + id).css({ border: '' });
         });
 
+        var currentCelebs = '<div class="currentCelebs">'
+
         //change the css style of each current celebrity thumbnail
         if (celebs[baseTime]) {
+            var currentSummaries = {};
+            window.celebSummary.map(function(celeb) {
+                if (!currentSummaries[celeb.name]) {
+                    currentSummaries[celeb.name] = celeb;
+                }
+
+            });
             celebs[baseTime].map(function(celeb) {
                 //find image named celeb and chang its css
                 var id = getCelebId(celeb);
                 $('#' + id).css({ border: "10px solid red" });
+                currentCelebs += '<div style="vertical-align: top;display: inline-block;text-align: center;width: 200px;"><img id="'+ id +'" height="100" width="100" class="img-circle" src="' + currentSummaries[celeb].thumbnailUrl + '"><span style="display: block; font-size: 20px;">' + id + '</span></div>&nbsp;';
             });
         }
+
+        currentCelebs += "</div>";
+        $("#currentCelebs").html(currentCelebs);
     }
 }
 

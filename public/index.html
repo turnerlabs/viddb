@@ -16,6 +16,7 @@
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,29 +43,29 @@
 
                 <!-- video player + celebs -->
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="video">
                             <div id="videoTitle"></div>
+                            <div id="currentCelebs"></div>
                             <video class="video_player" id="vid" controls seeking>
                                 <source src="" type=video/mp4>
                             </video>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="celebsTitle"></div>
-                        <div id="celebSummary"></div>
+                        <div class="objects">
+                            <ul id="currentLabels"></ul>
+                        </div>
                     </div>
                 </div>
 
                 <!-- divider -->
-                <div class="row"><br /></div>                
+                <div class="row"><br /><br /></div>
 
-                <!-- labels -->
                 <div class="row">
-                    <div class="objects">
-                        <ul id="currentLabels"></ul>
-                    </div>
-                </div>                
+                  <div class="col-md-12">
+                      <div id="celebsTitle"></div>
+                      <div id="celebSummary"></div>
+                  </div>
+                </div>
 
                 <!-- divider -->
                 <div class="row"><br /><br /></div>
@@ -76,9 +77,9 @@
                     </div>
                     <div class="col-md-6">
                         <div id="chart_div" style="width: 500px; height: 400px;"></div>
-                    </div>                    
-                </div>                
-               
+                    </div>
+                </div>
+
             </div>
         </div>
         <!-- /#page-content-wrapper -->
@@ -121,6 +122,6 @@
         float: left;
         width: 500px;
     } */
-</style> 
- 
+</style>
+
 </html>
