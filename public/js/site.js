@@ -72,7 +72,7 @@ function getVideoInfo(e){
     });
 
     //reload the video source
-    var src = 'http://video-metadata-ui.dev.services.ec2.dmtio.net/stream/' + vidName + '.mp4';
+    var src = '/api/stream/' + vidName + '.mp4';
     console.log(src);
     $("#vid").attr("src", src)
     $('#vid').bind('play', setTimeInterval);

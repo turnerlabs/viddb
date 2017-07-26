@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var utils = require('./../utils');
 var Bing = require('node-bing-api')({ accKey: process.env.AZURE_API_KEY });
+var aws = require('aws-sdk');
+var mime = require('mime');
+var s3 = new aws.S3();
+bucket = process.env.BUCKET;
 
 var generalController = require('./../controllers/general');
 var labelController = require('./../controllers/label');
@@ -113,5 +117,39 @@ router.get('/celebSummary/:videoName', function(req, res, next){
         res.json(payload)
     });
 });
+
+router.get('/stream/:video', stream);
+
+function stream(req, res, next) {
+  let key = 'videos/' + req.params.video,
+  params = {Bucket: bucket, Key: key};
+  console.log(params)
+  s3.headObject(params, function (err, data) {
+        if (err) {
+            // an error occurred
+            console.error(err);
+            return next();
+        }
+        var stream = s3.getObject(params).createReadStream();
+
+        // forward errors
+        stream.on('error', function error(err) {
+            //continue to the next middlewares
+            return next();
+        });
+
+        //Add the content type to the response (it's not propagated from the S3 SDK)
+        res.set('Content-Type', mime.lookup(key));
+        res.set('Content-Length', data.ContentLength);
+        res.set('Last-Modified', data.LastModified);
+        res.set('ETag', data.ETag);
+
+        stream.on('end', () => {
+            console.log('Served by Amazon S3: ' + key);
+        });
+        //Pipe the s3 object to the response
+        stream.pipe(res);
+    });
+}
 
 module.exports = router;
