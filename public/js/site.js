@@ -7,18 +7,21 @@ $(document).ready(function(){
 
         var vids = {vids: videoResult.res}
         var sideHtml = nunjucks.render('../templates/sidebar.njk', vids);
+        var videoId = window.location.hash.replace('#', '');
         $('#sidebar-placeholder').replaceWith(sideHtml);
-
         $('a.video').click(getVideoInfo);
-
         $("#wrapper").toggleClass("toggled");
+        
+        if (videoId) {
+            getVideoInfo(null, videoId);
+        }
     });
 
 
 });
 
-function getVideoInfo(e){
-    var vidName = e.target.id;
+function getVideoInfo(e, vidId){
+    var vidName = vidId || e.target.id;
     console.log(vidName);
 
     $('#videoTitle').html('<h4>' + vidName + '</h4>');

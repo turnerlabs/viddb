@@ -8,7 +8,7 @@
             </h2>
         </li>
        {% for v in vids %}
-        <li><a href="#" id="{{v.vid}}" class="video">{{v.vid}}</a></li>
+        <li><a href="#{{v.vid}}" id="{{v.vid}}" class="video">{{v.vid}}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
