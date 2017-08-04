@@ -43,8 +43,19 @@ function next(i, callback) {
   let celeb = queryResults[i].celebrity;
   console.log('processing ', celeb);
   Bing.images(celeb, { top: 1 }, function(err, response, body){
-      if (err) throw err;
-      if (body.value && body.value.length > 0) {
+      if (err) {
+        console.log(err);
+        //are we done?
+          if (i === queryResults.length-1) {
+            callback();
+            return;
+          }
+
+          //throttle next call
+          setTimeout(() => next(++i, callback), 1000);  
+      }
+
+      if (body && body.value && body.value.length > 0) {
         console.log('inserting thumbnail');
 
         const record = {
@@ -54,7 +65,10 @@ function next(i, callback) {
 
         let sql = 'insert into CelebrityThumbnails set ?';
         pool.query(sql, record, (err, result) => {
-          if (err) throw err;
+          if (err) {
+            console.log(err);
+            return;
+          }
           console.log('insert complete');
 
           //are we done?

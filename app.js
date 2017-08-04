@@ -29,7 +29,6 @@ app.use('/api', api);
 
 var envVars = utils.getEnvVars();
 app.locals.envVars = envVars;
-console.log(envVars)
 
 
 // catch 404 and forward to error handler

@@ -105,8 +105,9 @@ function getHTML(objects, baseTime) {
 }
 
 function getCelebId(celeb) {
-    var id = celeb.replace("'", '-');
-    id = id.replace(' ', '-');
+    var id = celeb.replace(/'/g, '-');
+    id = id.replace(/ /g, '-');
+    id = id.replace(/\./g, '');
     return id;
 }
 
