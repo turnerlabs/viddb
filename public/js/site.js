@@ -133,7 +133,7 @@ function highlightCurrentCeleb(celebs, baseTime) {
         var currentCelebs = '<div class="currentCelebs">'
 
         //change the css style of each current celebrity thumbnail
-        if (celebs[baseTime]) {
+        if (celebs && celebs[baseTime]) {
             var currentSummaries = {};
             window.celebSummary.map(function(celeb) {
                 if (!currentSummaries[celeb.name]) {
